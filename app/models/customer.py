@@ -1,0 +1,16 @@
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
+
+from app.database import Base
+
+class Customer(Base):
+    __tablename__ = "customers"
+
+    id = Column(Integer, primary_key=True, index=True)
+    firstName = Column(String, nullable=False)
+    lastName = Column(String, nullable=False)
+    city = Column(String, nullable=False)
+    country = Column(String, nullable=False)
+    phone = Column(String, nullable=False)
+
+    orders = relationship("Order", back_populates="customer")
