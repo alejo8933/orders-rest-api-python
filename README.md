@@ -111,6 +111,4 @@ orders-api/
 └── .gitignore          # Archivos excluidos de Git
 ```
 
-## ✒️ Autor
 
-- **alejo8933**
