@@ -8,7 +8,7 @@ from app.routers import health_router, customers_router, products_router, orders
 async def lifespan(app: FastAPI):
     # Al iniciar: crear tablas y correr seed
     from app.database import Base, engine
-    from app.models import *
+    import app.models
     Base.metadata.create_all(bind=engine)
     from seed import run_seed
     run_seed()
