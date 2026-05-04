@@ -1,14 +1,27 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.database import Base, engine
-from app.models import *
+
 from app.routers import health_router, customers_router, products_router, orders_router, order_items_router
 
-# Crea todas las tablas
-Base.metadata.create_all(bind=engine)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Al iniciar: crear tablas y correr seed
+    from app.database import Base, engine
+    from app.models import *
+    Base.metadata.create_all(bind=engine)
+    from seed import run_seed
+    run_seed()
+    yield
+    # Al cerrar: nada
 
-app = FastAPI(title="Orders API", version="1.0.0",
-              docs_url="/api/v1/docs", openapi_url="/api/v1/openapi.json")
+app = FastAPI(
+    title="Orders API",
+    version="1.0.0",
+    docs_url="/api/v1/docs",
+    openapi_url="/api/v1/openapi.json",
+    lifespan=lifespan
+)
 
 app.add_middleware(
     CORSMiddleware,
