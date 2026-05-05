@@ -7,12 +7,8 @@ import os
 load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./orders.db")
-
 if DATABASE_URL.startswith("postgres://"):
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+asyncpg://", 1)
-elif DATABASE_URL.startswith("postgresql://") and "asyncpg" not in DATABASE_URL:
-    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://", 1)
-
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 connect_args = {"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
 engine = create_engine(DATABASE_URL, connect_args=connect_args)
 
