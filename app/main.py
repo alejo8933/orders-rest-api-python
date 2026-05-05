@@ -6,14 +6,10 @@ from app.routers import health_router, customers_router, products_router, orders
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Al iniciar: crear tablas y correr seed
     from app.database import Base, engine
     import app.models
     Base.metadata.create_all(bind=engine)
-    from seed import run_seed
-    run_seed()
     yield
-    # Al cerrar: nada
 
 app = FastAPI(
     title="Orders API",
