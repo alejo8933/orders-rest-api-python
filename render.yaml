@@ -6,4 +6,4 @@ services:
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: DATABASE_URL
-        value: sqlite:///./orders.db
+        value: postgresql://orders_db_tpwm_user:FBlHMy0Z76CfqdAphDtvm9KasgAz9ZQL@dpg-d7sm7uj7uimc7386jt30-a/orders_db_tpwm
